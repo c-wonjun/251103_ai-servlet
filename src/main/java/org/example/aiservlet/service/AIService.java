@@ -10,6 +10,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+// https://aistudio.google.com/
+// https://aistudio.google.com/api-keys
+// https://groq.com/
+// https://console.groq.com/keys
 public class AIService {
     private final Client geminiClient;
     private final HttpClient httpClient = HttpClient.newHttpClient();
@@ -17,7 +21,12 @@ public class AIService {
     private final String groqKey;
 
     public AIService() {
-        Dotenv dotenv = Dotenv.load();
+        // 배포 시에 .env가 github에 포힘되어 있지 않음 -> 환경변수
+//        Dotenv dotenv = Dotenv.load(); // resources 안에 dotenv가 없으면 에러가 남
+        // .env 없이 환경변수로 호환해서 쓰려면
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing() // 이게 있어야 dotenv가 없을 경우 환경변수를 읽어서 대신 사용
+                .load();
 //        String apiKey = dotenv.get("GOOGLE_API_KEY");
         geminiClient = Client.builder().apiKey(
                 dotenv.get("GOOGLE_API_KEY")

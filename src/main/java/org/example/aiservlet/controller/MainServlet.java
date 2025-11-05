@@ -10,7 +10,8 @@ import org.example.aiservlet.service.AIService;
 
 import java.io.IOException;
 
-@WebServlet(value = "/", loadOnStartup = 1)
+// 이 서블릿 클래스를 -> 서블렛 컨테이너 등록 -> 사용 가능 하게 만드는 어노테이션
+@WebServlet("/") // "/"
 public class MainServlet extends HttpServlet {
     private AIService ai = null;
 
@@ -35,7 +36,8 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String textParam = req.getParameter("text"); // form = post, input name=text
-        String answer = ai.chat( "%s, 꾸미는 텍스트 없이.".formatted(textParam));
+//        String answer = ai.chat( "%s, 꾸미는 텍스트 없이.".formatted(textParam));
+        String answer = ai.chatByGroq( "%s, 꾸미는 텍스트 없이.".formatted(textParam));
         req.setAttribute("title", "'%s'에 대한 AI의 답".formatted(textParam));
         req.setAttribute("answer", answer);
         req.getRequestDispatcher("/WEB-INF/chat.jsp").forward(req, resp);
