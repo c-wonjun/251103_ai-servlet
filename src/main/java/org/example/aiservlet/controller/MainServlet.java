@@ -11,7 +11,7 @@ import org.example.aiservlet.service.AIService;
 import java.io.IOException;
 
 // 이 서블릿 클래스를 -> 서블렛 컨테이너 등록 -> 사용 가능 하게 만드는 어노테이션
-@WebServlet("/") // "/"
+@WebServlet(value = "/", loadOnStartup = 1)
 public class MainServlet extends HttpServlet {
     private AIService ai = null;
 
